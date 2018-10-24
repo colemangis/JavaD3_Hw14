@@ -8,16 +8,19 @@ var tbody = d3.select("tbody");
 console.log(ufo);
 
 // Arrow function
-data.forEach(sighting => {
+function renderTable(dog){
+tbody.html("");
+dog.forEach(sighting => {
   var row = tbody.append("tr");
   Object.entries(sighting).forEach(([key, value]) => {
     var cell = tbody.append("td");
     cell.text(value);
   });
+  console.log("test");
 });
-
+};
 // Select the submit button
-var submit = d3.select("#submit");
+var submit = d3.select("#filter-btn");
 
 submit.on("click", function() {
 
@@ -30,10 +33,39 @@ submit.on("click", function() {
   // Get the value property of the input element
   var inputValue = inputField.property("value");
 
-  var filteredData = ufo.filter(function(fSight){
-    return fSight.state === inputValue
-  })
+  console.log(inputValue);
+  console.log(ufo);
+
+  var filteredData = data.filter(fSight => fSight.datetime >= inputValue);
   console.log(filteredData);
+
+  //Get a reference to the table body
+  var tbody = d3.select("tbody");
+
+  renderTable(filteredData);
+  });
+
+ renderTable(ufo);
+
+
+
+
+  // Arrow function
+  // filteredData.forEach((sighting) => {
+  //   var row = tbody.append("tr");
+  //   Object.entries(sighting).forEach(([key, value]) => {
+  //     var cell = tbody.append("td");
+  //     cell.text(value);
+  //   });
+  // });
+
+  // function selectState(fSight) {
+  //   return fSight.state === inputValue;
+  // };
+  // var filteredDate = ufo.filter(selectState);
+  // console.log(filteredData);
+
+
 
   // //convert date
   // var inputValue = inputValue.getTime()
@@ -46,6 +78,5 @@ submit.on("click", function() {
   //   } 
   // })
 //   console.log(filteredData);
-});
 
 // var parseDate = d3.timeParse("%m/%d/%y")
